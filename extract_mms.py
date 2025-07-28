@@ -55,6 +55,7 @@ def extract_files_from_xml(xml_file, base_directory='extracted_files'):
 
         if elem.tag == 'part':
             output_directory = os.path.join(base_directory, mms_contact_name)
+            part_number = elem.attrib.get('name')[5:]
             encoded_data = elem.attrib.get('data')
             content_type = elem.attrib.get('ct')
 
@@ -64,7 +65,7 @@ def extract_files_from_xml(xml_file, base_directory='extracted_files'):
                     continue
 
                 file_extension = MIME_TO_EXTENSION.get(content_type, '.bin')
-                save_base64_file(encoded_data, output_directory, f'MMS_{formatted_date}_{mms_id}{file_extension}')
+                save_base64_file(encoded_data, output_directory, f'MMS_{formatted_date}_{mms_id}_{part_number}{file_extension}')
                 file_count += 1
 
         elem.clear()
